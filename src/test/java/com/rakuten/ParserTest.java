@@ -97,6 +97,6 @@ public class ParserTest {
     }
 
     private Parser getParser() {
-        throw new IllegalStateException("Not implemented!");
+        return ItemParserFactory.getParser();
     }
 }
