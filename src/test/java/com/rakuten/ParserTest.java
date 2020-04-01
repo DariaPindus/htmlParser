@@ -97,6 +97,6 @@ public class ParserTest {
     }
 
     private Parser getParser() {
-        return ItemParserFactory.getParser();
+        return new ItemParserFactory();
     }
 }
