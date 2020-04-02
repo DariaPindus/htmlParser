@@ -9,6 +9,6 @@ public class AmazonBoxCategoryParser implements StringValueParser {
     public String parseValue(Document doc) {
         Elements parentBox = doc.select(CATEGORY_SELECTOR);
         assertParseSucceeded(parentBox, CATEGORY_SELECTOR);
-        return parentBox.first().select("a").text().trim();
+        return parentBox.first().child(0).text().trim();
     }
 }

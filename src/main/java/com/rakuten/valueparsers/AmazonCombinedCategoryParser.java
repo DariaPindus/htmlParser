@@ -13,7 +13,7 @@ public class AmazonCombinedCategoryParser implements StringValueParser {
     public String parseValue(Document doc) {
         Elements parent = doc.select(SELECTOR);
         assertParseSucceeded(parent, SELECTOR);
-        Elements listItems = parent.first().children();
+        Elements listItems = parent.first().children().first().children();
         return concatenateItems(listItems);
     }
 
@@ -21,6 +21,6 @@ public class AmazonCombinedCategoryParser implements StringValueParser {
         return IntStream.range(0, listItems.size())
                 .filter(i -> i % 2 == 0)
                 .mapToObj(i -> listItems.get(i).child(0).text().trim())
-                .collect(Collectors.joining(" > "));
+                .collect(Collectors.joining(" › "));
     }
 }

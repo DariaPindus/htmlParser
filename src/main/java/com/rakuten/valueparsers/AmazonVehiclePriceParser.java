@@ -10,6 +10,6 @@ public class AmazonVehiclePriceParser implements StringValueParser {
     public String parseValue(Document doc) {
         Elements parentRow = doc.select(SELECTOR);
         assertParseSucceeded(parentRow, SELECTOR);
-        return parentRow.last().children().first().text().trim();
+        return parentRow.first().children().last().child(1).text();
     }
 }

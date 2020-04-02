@@ -1,7 +1,5 @@
 package com.rakuten.valueparsers;
 
-import com.rakuten.Item;
-import com.rakuten.Parser;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 

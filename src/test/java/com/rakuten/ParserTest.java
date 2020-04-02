@@ -46,7 +46,7 @@ public class ParserTest {
         Item car01Item = parser.parse(car01);
         Assert.assertEquals("2020 BMW M5", car01Item.getName());
         Assert.assertEquals("BMW", car01Item.getCategory());
-        Assert.assertEquals("$85,895.00", car01Item.getPrice());
+        Assert.assertEquals("$103,695.00", car01Item.getPrice());
 
         String car02 = new String(Files.readAllBytes(Paths.get("src/test/resources/amazon/car/02.html")));
         Item car02Item = parser.parse(car02);
@@ -97,6 +97,6 @@ public class ParserTest {
     }
 
     private Parser getParser() {
-        return new ItemParserFactory();
+        return new GeneralItemParser();
     }
 }
