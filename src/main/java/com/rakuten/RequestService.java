@@ -20,7 +20,6 @@ public class RequestService extends WebService {
     @RequestMethod("POST")
     @ResourcePath("parse")
     public Item parsePage(String url) {
-        System.out.println("Got request " + url);
         try {
             String input = fetchHtml(url);
             return new AmazonItemParser().parse(input);
@@ -30,22 +29,13 @@ public class RequestService extends WebService {
         }
     }
 
-    @RequestMethod("GET")
-    @ResourcePath("test")
-    public String test() {
-        return "hello fkkakfa";
-    }
-
     private String fetchHtml(String url) throws IOException {
-        System.out.println("[FETCH] " + url);
-
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpget = new HttpGet(url);
             CloseableHttpResponse response = httpClient.execute(httpget);
 
             String result = new BufferedReader(new InputStreamReader(response.getEntity().getContent())).lines()
                     .parallel().collect(Collectors.joining("\n"));
-            System.out.println("[READ] " + result);
             return result;
         }
     }
