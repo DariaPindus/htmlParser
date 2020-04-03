@@ -1,30 +1,37 @@
 package com.rakuten;
 
-import com.rakuten.valueparsers.StringValueParser;
+import com.rakuten.valueparsers.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class AmazonItemParser implements Parser {
-    protected StringValueParser nameParser;
-    protected StringValueParser categoryParser;
-    protected StringValueParser priceParser;
+    protected final StringParserFactory nameParser;
+    protected final StringParserFactory categoryParser;
+    protected final StringParserFactory priceParser;
 
-    public AmazonItemParser(StringValueParser nameParser, StringValueParser categoryParser, StringValueParser priceParser) {
-        this.nameParser = nameParser;
-        this.categoryParser = categoryParser;
-        this.priceParser = priceParser;
+    public AmazonItemParser() {
+        nameParser = new StringParserFactory(
+                "name",
+                Arrays.asList(new AmazonNameByTitleParser(), new AmazonNameForVehicleParser()));
+
+        categoryParser = new StringParserFactory(
+                "category",
+                Arrays.asList(new AmazonCategoryInBoxParser(), new AmazonCategoryFromBreadcrumbsParser(), new AmazonCategoryByLineParser()));
+
+        priceParser = new StringParserFactory(
+                "price",
+                Arrays.asList(new AmazonPriceByPriceIdParser(), new AmazonPriceFromSelectedBoxParser(), new AmazonPriceVehicleParser()));
     }
 
     @Override
     public Item parse(String input) {
         Document doc = Jsoup.parse(input, "UTF-8");
 
-        return new Item(nameParser.parseValue(doc),
-                categoryParser.parseValue(doc),
-                priceParser.parseValue(doc));
+        return new Item(nameParser.parseField(doc),
+                categoryParser.parseField(doc),
+                priceParser.parseField(doc));
     }
 
 }

@@ -6,13 +6,14 @@ import org.jsoup.select.Elements;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class AmazonCombinedCategoryParser implements StringValueParser {
-    private static final String SELECTOR = "#wayfinding-breadcrumbs_feature_div";
-
+public class AmazonCategoryFromBreadcrumbsParser extends StringFieldParser {
+    public AmazonCategoryFromBreadcrumbsParser() {
+        super("#wayfinding-breadcrumbs_feature_div");
+    }
+    
     @Override
     public String parseValue(Document doc) {
         Elements parent = doc.select(SELECTOR);
-        assertParseSucceeded(parent, SELECTOR);
         Elements listItems = parent.first().children().first().children();
         return concatenateItems(listItems);
     }

@@ -9,13 +9,9 @@ import org.httprpc.ResourcePath;
 import org.httprpc.WebService;
 
 import javax.servlet.annotation.WebServlet;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/*", loadOnStartup = 1)
@@ -27,7 +23,7 @@ public class RequestService extends WebService {
         System.out.println("Got request " + url);
         try {
             String input = fetchHtml(url);
-            return new GeneralItemParser().parse(input);
+            return new AmazonItemParser().parse(input);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
